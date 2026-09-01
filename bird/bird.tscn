@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bf1oumtpbem61"]
+
+[ext_resource type="Script" uid="uid://crvch75y3prib" path="res://bird/bird.gd" id="1_7k2hk"]
+[ext_resource type="Texture2D" uid="uid://bnhla5wvyittu" path="res://assets/bird.png" id="2_qlr2y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2o6t"]
+atlas = ExtResource("2_qlr2y")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_feb5d"]
+atlas = ExtResource("2_qlr2y")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ot1l3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2o6t")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_feb5d")
+}],
+"loop": 1,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4q5nv"]
+radius = 15.033297
+
+[node name="Bird" type="CharacterBody2D" unique_id=442786852]
+script = ExtResource("1_7k2hk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2100824032]
+unique_name_in_owner = true
+position = Vector2(0, -6)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_ot1l3")
+animation = &"fall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1254135485]
+shape = SubResource("CircleShape2D_4q5nv")
