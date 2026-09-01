@@ -11,8 +11,9 @@ var speed: float = 100
 @onready var pipe_5: Pipe = $Pipe5
 @onready var pipe_spawn_timer: Timer = $PipeSpawnTimer
 @onready var replay_button: Button = $CanvasLayer/ReplayButton
-@onready var score_label: Label = $CanvasLayer/VBoxContainer/ScoreLabel
-@onready var best_score_label: Label = $CanvasLayer/VBoxContainer/BestScoreLabel
+@onready var score_label: Label = %ScoreLabel
+@onready var best_score_label: Label = %BestScoreLabel
+@onready var background: Parallax2D = $Background
 
 
 var current_pipe: int = 1
@@ -21,7 +22,9 @@ var current_pipe: int = 1
 func _ready() -> void:
 	Global.died.connect(_on_died)
 	Global.score_changed.connect(_on_score_changed)
+	Global.speed_changed.connect(_on_speed_changed)
 	
+	background.autoscroll.x = Global.speed * -0.5
 	update_score()
 	replay_button.hide()
 	spawn_pipe()
@@ -48,6 +51,10 @@ func spawn_pipe() -> void:
 	current_pipe += 1
 	if current_pipe > 5:
 		current_pipe = 1
+
+
+func _on_speed_changed() -> void:
+	background.autoscroll.x = Global.speed * -0.5
 
 
 func _on_died() -> void:

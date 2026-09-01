@@ -4,6 +4,7 @@ extends Node
 
 signal score_changed
 signal died
+signal speed_changed
 
 const BASE_SPEED = 100.0
 
@@ -11,6 +12,15 @@ var score: int
 var best_score: int
 var speed: float = 100.0
 var dead: bool = false
+
+
+func change_speep(new_speed: float) -> void:
+	speed = new_speed
+	speed_changed.emit()
+
+
+func speed_up() -> void:
+	change_speep(speed * 1.01)
 
 
 func increment_score() -> void:
@@ -21,12 +31,12 @@ func increment_score() -> void:
 
 func die() -> void:
 	dead = true
-	speed = 0.0
+	change_speep(0.0)
 	died.emit()
 
 
 func restart() -> void:
 	dead = false
-	speed = BASE_SPEED
+	change_speep(BASE_SPEED)
 	score = 0
 	get_tree().reload_current_scene()

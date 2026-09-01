@@ -3,12 +3,44 @@
 [ext_resource type="PackedScene" uid="uid://bf1oumtpbem61" path="res://bird/bird.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://b0j7okpckx1xe" path="res://game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://cnjxmiy2i81sl" path="res://pipe/pipe.tscn" id="2_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://dvboel7kbcyps" path="res://assets/background.png" id="3_feb5d"]
+[ext_resource type="FontFile" uid="uid://cqviobrqbg0f6" path="res://assets/press-start-2p.regular.ttf" id="5_7jktm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feb5d"]
 size = Vector2(1195, 88)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7jktm"]
+bg_color = Color(0.95587176, 0.8553879, 0, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.39607844, 0.32941177, 0, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ryrav"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fc0e3"]
+font = ExtResource("5_7jktm")
+font_size = 20
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
 [node name="Game" type="Node2D" unique_id=588580188]
 script = ExtResource("1_feb5d")
+
+[node name="Background" type="Parallax2D" parent="." unique_id=1056268300]
+scroll_offset = Vector2(-2799, 0)
+repeat_size = Vector2(525, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1377807077]
+position = Vector2(245.99998, 326.99997)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_feb5d")
 
 [node name="Pipe1" parent="." unique_id=1361030838 instance=ExtResource("2_e2o6t")]
 position = Vector2(-1067, 349)
@@ -43,18 +75,27 @@ shape = SubResource("RectangleShape2D_feb5d")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1670249975]
 
 [node name="ReplayButton" type="Button" parent="CanvasLayer" unique_id=1205176054]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -34.0
-offset_top = -15.5
-offset_right = 34.0
-offset_bottom = 15.5
+offset_left = -172.0
+offset_top = -43.0
+offset_right = 172.0
+offset_bottom = 43.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.94222826, 0.6094542, 1.1551381e-06, 1)
+theme_override_colors/font_outline_color = Color(0.39473578, 0.329215, 1.4439226e-07, 1)
+theme_override_constants/outline_size = 22
+theme_override_fonts/font = ExtResource("5_7jktm")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_7jktm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7jktm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7jktm")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ryrav")
 text = "Rejouer"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=333144220]
@@ -67,31 +108,39 @@ offset_right = -22.0
 offset_bottom = 71.0
 grow_horizontal = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=436370097]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=857870613]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Score :"
-horizontal_alignment = 2
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=1420401097]
-layout_mode = 2
-text = "100"
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=1105179087]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2" unique_id=466725134]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Meilleur Score :"
+text = "Meilleur Score:"
+label_settings = SubResource("LabelSettings_fc0e3")
 
 [node name="BestScoreLabel" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2" unique_id=1182860812]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "200"
+label_settings = SubResource("LabelSettings_fc0e3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer" unique_id=436370097]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=857870613]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Score:"
+label_settings = SubResource("LabelSettings_fc0e3")
+horizontal_alignment = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer" unique_id=1420401097]
+unique_name_in_owner = true
+layout_mode = 2
+text = "100"
+label_settings = SubResource("LabelSettings_fc0e3")
 
 [connection signal="timeout" from="PipeSpawnTimer" to="." method="_on_pipe_spawn_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/ReplayButton" to="." method="_on_replay_button_pressed"]
