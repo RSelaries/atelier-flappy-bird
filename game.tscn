@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b0j7okpckx1xe" path="res://game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://cnjxmiy2i81sl" path="res://pipe/pipe.tscn" id="2_e2o6t"]
 [ext_resource type="Texture2D" uid="uid://dvboel7kbcyps" path="res://assets/background.png" id="3_feb5d"]
+[ext_resource type="Texture2D" uid="uid://cf8peubkfmc2s" path="res://assets/floor.png" id="3_ryrav"]
 [ext_resource type="FontFile" uid="uid://cqviobrqbg0f6" path="res://assets/press-start-2p.regular.ttf" id="5_7jktm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_feb5d"]
@@ -32,15 +33,19 @@ outline_color = Color(0, 0, 0, 1)
 [node name="Game" type="Node2D" unique_id=588580188]
 script = ExtResource("1_feb5d")
 
-[node name="Background" type="Parallax2D" parent="." unique_id=1056268300]
-scroll_offset = Vector2(-2799, 0)
+[node name="BackgroundScroll" type="Parallax2D" parent="." unique_id=1056268300]
 repeat_size = Vector2(525, 0)
-repeat_times = 3
+repeat_times = 5
 
-[node name="Sprite2D" type="Sprite2D" parent="Background" unique_id=1377807077]
+[node name="Background" type="Sprite2D" parent="BackgroundScroll" unique_id=1377807077]
 position = Vector2(245.99998, 326.99997)
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("3_feb5d")
+
+[node name="Floor" type="Sprite2D" parent="BackgroundScroll" unique_id=331380020]
+position = Vector2(57.000004, 702.00006)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("3_ryrav")
 
 [node name="Pipe1" parent="." unique_id=1361030838 instance=ExtResource("2_e2o6t")]
 position = Vector2(-1067, 349)
@@ -66,10 +71,14 @@ position = Vector2(300, 324)
 wait_time = 3.5
 autostart = true
 
-[node name="Floor" type="StaticBody2D" parent="." unique_id=912856108]
+[node name="FloorAndCielling" type="StaticBody2D" parent="." unique_id=912856108]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=339940389]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorAndCielling" unique_id=339940389]
 position = Vector2(587.5, 659)
+shape = SubResource("RectangleShape2D_feb5d")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="FloorAndCielling" unique_id=554597781]
+position = Vector2(587.5, -40)
 shape = SubResource("RectangleShape2D_feb5d")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1670249975]

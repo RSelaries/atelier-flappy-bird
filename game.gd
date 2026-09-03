@@ -13,7 +13,7 @@ var speed: float = 100
 @onready var replay_button: Button = $CanvasLayer/ReplayButton
 @onready var score_label: Label = %ScoreLabel
 @onready var best_score_label: Label = %BestScoreLabel
-@onready var background: Parallax2D = $Background
+@onready var background_scroll: Parallax2D = $BackgroundScroll
 
 
 var current_pipe: int = 1
@@ -24,7 +24,7 @@ func _ready() -> void:
 	Global.score_changed.connect(_on_score_changed)
 	Global.speed_changed.connect(_on_speed_changed)
 	
-	background.autoscroll.x = Global.speed * -0.5
+	background_scroll.autoscroll.x = Global.speed * -0.5
 	update_score()
 	replay_button.hide()
 	spawn_pipe()
@@ -54,7 +54,7 @@ func spawn_pipe() -> void:
 
 
 func _on_speed_changed() -> void:
-	background.autoscroll.x = Global.speed * -0.5
+	background_scroll.autoscroll.x = Global.speed * -0.5
 
 
 func _on_died() -> void:

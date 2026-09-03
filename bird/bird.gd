@@ -13,7 +13,7 @@ func _physics_process(delta: float) -> void:
 	velocity += get_gravity() * delta
 	
 	# Sauter
-	if Input.is_action_just_pressed("ui_accept") and not Global.dead:
+	if Input.is_action_just_pressed(&"jump") and not Global.dead:
 		velocity.y = JUMP_VELOCITY
 	
 	if Global.dead:
